@@ -38,9 +38,6 @@ class ELearn:
 
 
     def take_exam(self, id):
-        entry_page = 'https://e-mdl.kure-nct.ac.jp/mod/quiz/view.php?id=' + str(id)
-        self.driver.get(entry_page)
-
         problems_page = 'https://e-mdl.kure-nct.ac.jp/mod/quiz/startattempt.php'
         res = self.req_post(problems_page, data={'cmid': id, 'sesskey': self.get_sesskey()})
 
