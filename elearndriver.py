@@ -3,6 +3,7 @@ import argparse
 import requests
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
 
@@ -10,7 +11,7 @@ from selenium import webdriver
 class ELearn:
     def __init__(self, driver=webdriver.Firefox()):
         self.driver = driver
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(60)
 
     
     def get_sesskey(self):
@@ -39,11 +40,16 @@ class ELearn:
 
     def take_exam(self, id):
         problems_page = 'https://e-mdl.kure-nct.ac.jp/mod/quiz/startattempt.php'
+
         res = self.req_post(problems_page, data={'cmid': id, 'sesskey': self.get_sesskey()})
-
         self.driver.get(res.url)
-
     
+
+    def solve(self, max_loop=100, ans_sec_per_questions=20):
+        import h30toutatudo
+        h30toutatudo.H30Toutatudo(self.driver)(max_loop, ans_sec_per_questions)
+
+
     def quit(self):
         self.driver.close()
         self.driver.quit()

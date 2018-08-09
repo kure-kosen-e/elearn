@@ -18,11 +18,9 @@ def main():
     elearn.login(args.username, args.password)
 
     elearn.take_exam(9001)
-    time.sleep(20)
+    elearn.solve()
 
     elearn.logout()
-
-    time.sleep(3)
 
     elearn.quit()
 
