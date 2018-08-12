@@ -18,9 +18,26 @@ class ELearn:
         return self.driver.find_element_by_name('sesskey').get_attribute('value')
 
 
+    def select_element(self, elements, attribute, value):
+        for e in elements:
+            if e.get_attribute(attribute) == value:
+                return e
+        return None
+
+
+    def select_elements(self, elements, attribute, value):
+        correct_elems = []
+        for e in elements:
+            if e.get_attribute(attribute) == value:
+                elems += e,
+        return elems
+
+
     def req_post(self, url, data=None):
         moodle_session = self.driver.get_cookie('MoodleSession')['value']
-        return requests.post(url, data=data, cookies={'MoodleSession': moodle_session}) 
+        user_agent = self.driver.execute_script('return navigator.userAgent')
+        print(user_agent)
+        return requests.post(url, data=data, headers={'User-Agent': user_agent}, cookies={'MoodleSession': moodle_session}) 
 
 
     def login(self, username, password):
@@ -54,22 +71,3 @@ class ELearn:
         self.driver.close()
         self.driver.quit()
 
-
-
-if __name__ == '__main__':
-    parse = argparse.ArgumentParser()
-    parse.add_argument('-u', '--username', required=True)
-    parse.add_argument('-p', '--password', required=True)
-    args = parse.parse_args()
-    
-    driver = webdriver.Firefox()
-    elearn = ELearn(driver)
-
-    elearn.login(args.username, args.password)
-    elearn.logout()
-
-    time.sleep(10)
-
-    driver.close()
-    driver.quit()
-    
