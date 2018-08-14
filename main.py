@@ -18,6 +18,7 @@ def main():
     elearn.login(args.username, args.password)
 
     elearn.take_exam(9001)
+    return
     elearn.solve()
 
     elearn.logout()
