@@ -36,8 +36,7 @@ class ELearn:
     def req_post(self, url, data=None):
         moodle_session = self.driver.get_cookie('MoodleSession')['value']
         user_agent = self.driver.execute_script('return navigator.userAgent')
-        print(user_agent)
-        return requests.post(url, data=data, headers={'User-Agent': user_agent}, cookies={'MoodleSession': moodle_session}) 
+        return requests.post(url, data, headers={'User-Agent': user_agent}, cookies={'MoodleSession': moodle_session}) 
 
 
     def login(self, username, password):
